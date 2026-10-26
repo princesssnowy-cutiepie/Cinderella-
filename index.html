@@ -79,7 +79,7 @@
 
         .progress-bar-fill {
             height: 100%;
-            width: 25%;
+            width: 20%;
             background: linear-gradient(90deg, #ff4d8d, #ff758c);
             box-shadow: 0 0 10px #ff4d8d;
             transition: width 0.4s ease;
@@ -89,12 +89,12 @@
         .card-container {
             width: 90%;
             max-width: 390px;
-            min-height: 520px;
+            min-height: 540px;
             background: rgba(22, 16, 26, 0.75);
             border: 1px solid rgba(255, 77, 141, 0.25);
             backdrop-filter: blur(15px);
             border-radius: 28px;
-            padding: 32px 24px;
+            padding: 28px 20px;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6),
                         0 0 25px rgba(255, 77, 141, 0.15);
             z-index: 10;
@@ -134,24 +134,24 @@
         h1, h2 {
             font-family: 'Playfair Display', serif;
             color: #ffd0ec;
-            margin-bottom: 14px;
+            margin-bottom: 12px;
             font-weight: 700;
         }
 
-        h1 { font-size: 28px; }
-        h2 { font-size: 24px; }
+        h1 { font-size: 26px; }
+        h2 { font-size: 23px; }
 
         p {
-            font-size: 14px;
-            line-height: 1.6;
+            font-size: 13.5px;
+            line-height: 1.55;
             color: #d1c4d4;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
             font-weight: 400;
         }
 
         .icon-large {
-            font-size: 48px;
-            margin-bottom: 16px;
+            font-size: 45px;
+            margin-bottom: 14px;
             filter: drop-shadow(0 0 12px rgba(255, 77, 141, 0.5));
         }
 
@@ -160,8 +160,8 @@
             background: linear-gradient(135deg, #ff4d8d 0%, #ff758c 100%);
             color: #ffffff;
             border: none;
-            padding: 14px 32px;
-            font-size: 15px;
+            padding: 13px 28px;
+            font-size: 14.5px;
             font-weight: 600;
             border-radius: 50px;
             cursor: pointer;
@@ -178,42 +178,77 @@
             box-shadow: 0 12px 25px rgba(255, 77, 141, 0.6);
         }
 
-        .btn:active {
-            transform: translateY(0);
-        }
-
         /* Step 3: Compliments List */
         .compliment-list {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
             width: 100%;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
             text-align: left;
+            max-height: 350px;
+            overflow-y: auto;
+            padding-right: 2px;
         }
 
         .compliment-card {
             background: rgba(255, 255, 255, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 16px;
-            padding: 14px;
+            border-radius: 14px;
+            padding: 11px 13px;
             backdrop-filter: blur(5px);
         }
 
         .compliment-card h4 {
-            font-size: 14px;
+            font-size: 13.5px;
             color: #ff9ebb;
-            margin-bottom: 4px;
+            margin-bottom: 3px;
             display: flex;
             align-items: center;
             gap: 6px;
         }
 
         .compliment-card p {
-            font-size: 12.5px;
+            font-size: 12px;
             margin-bottom: 0;
             color: #bfaec2;
-            line-height: 1.4;
+            line-height: 1.35;
+        }
+
+        /* Step 4: Polaroid Gallery */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            width: 100%;
+            margin-bottom: 12px;
+        }
+
+        .polaroid {
+            background: #ffffff;
+            padding: 6px 6px 10px 6px;
+            border-radius: 6px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            transform: rotate(-2deg);
+        }
+
+        .polaroid:nth-child(even) {
+            transform: rotate(2deg);
+        }
+
+        .polaroid img {
+            width: 100%;
+            height: 85px;
+            object-fit: cover;
+            border-radius: 3px;
+        }
+
+        .polaroid-caption {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            color: #333333;
+            font-size: 11px;
+            margin-top: 5px;
         }
     </style>
 </head>
@@ -230,7 +265,7 @@
     <!-- Main Card Container -->
     <div class="card-container">
 
-        <!-- STEP 1: WELCOME PAGE -->
+        <!-- STEP 1: WELCOME SCREEN -->
         <div class="step active" id="step1">
             <div class="icon-large">❤️</div>
             <h1>Hey Cinderella,</h1>
@@ -267,11 +302,36 @@
                     <p>Simply being around you makes everything in life feel a little more exciting, meaningful, and full of endless possibilities.</p>
                 </div>
             </div>
-            <button class="btn" onclick="nextStep(4)">One last thing... 🎁</button>
+            <button class="btn" onclick="nextStep(4)">Memories 📸</button>
         </div>
 
-        <!-- STEP 4: MY WISH FOR YOU -->
+        <!-- STEP 4: MEMORIES POLAROID GALLERY -->
         <div class="step" id="step4">
+            <h2>That One Time...</h2>
+            <div class="gallery-grid">
+                <div class="polaroid">
+                    <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300" alt="Us">
+                    <div class="polaroid-caption">us ✨</div>
+                </div>
+                <div class="polaroid">
+                    <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=300" alt="Cute">
+                    <div class="polaroid-caption">being cute 💕</div>
+                </div>
+                <div class="polaroid">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300" alt="Favorite">
+                    <div class="polaroid-caption">favorite 😊</div>
+                </div>
+                <div class="polaroid">
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300" alt="Always">
+                    <div class="polaroid-caption">always 💖</div>
+                </div>
+            </div>
+            <p style="font-size: 11.5px; margin-bottom: 8px;">Every moment with you feels like a scene from a movie I'd watch on repeat.</p>
+            <button class="btn" onclick="nextStep(5)">One last thing... 🎁</button>
+        </div>
+
+        <!-- STEP 5: MY WISH FOR YOU & CELEBRATION -->
+        <div class="step" id="step5">
             <div class="icon-large">🎂</div>
             <h1>My Wish For You</h1>
             <p>May the coming year bring you an abundance of all the love, endless success, and pure, untouched happiness that you so rightfully deserve. May your biggest dreams soar higher than ever before, Cinderella, and may all your wishes come true. Have an unforgettable birthday!</p>
@@ -298,16 +358,16 @@
             return document.getElementById(elemId);
         }
 
-        // Navigation between steps
+        // Navigation between steps (Total 5 steps now)
         function nextStep(stepNumber) {
-            for (let i = 1; i <= 4; i++) {
+            for (let i = 1; i <= 5; i++) {
                 id('step' + i).classList.remove('active');
             }
             
             id('step' + stepNumber).classList.add('active');
 
             const progressFill = id('progressFill');
-            progressFill.style.width = (stepNumber * 25) + '%';
+            progressFill.style.width = (stepNumber * 20) + '%';
         }
 
         // Confetti effect on final celebration button
