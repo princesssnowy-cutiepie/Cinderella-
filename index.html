@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Cinderella ✨</title>
+    <!-- Google Fonts & Canvas Confetti Library -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+        }
+
+        body {
+            background-color: #0b070d;
+            color: #ffffff;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Floating Hearts Animation Background */
+        .hearts-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .heart {
+            position: absolute;
+            color: #ff4d8d;
+            opacity: 0.3;
+            font-size: 20px;
+            animation: float 8s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) scale(0.8) rotate(0deg);
+                opacity: 0.1;
+            }
+            50% {
+                opacity: 0.4;
+            }
+            100% {
+                transform: translateY(-10vh) scale(1.2) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Top Progress Bar Container */
+        .progress-bar-wrap {
+            position: fixed;
+            top: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 85%;
+            max-width: 360px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            overflow: hidden;
+            z-index: 100;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            width: 25%;
+            background: linear-gradient(90deg, #ff4d8d, #ff758c);
+            box-shadow: 0 0 10px #ff4d8d;
+            transition: width 0.4s ease;
+        }
+
+        /* Card Frame */
+        .card-container {
+            width: 90%;
+            max-width: 390px;
+            min-height: 520px;
+            background: rgba(22, 16, 26, 0.75);
+            border: 1px solid rgba(255, 77, 141, 0.25);
+            backdrop-filter: blur(15px);
+            border-radius: 28px;
+            padding: 32px 24px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6),
+                        0 0 25px rgba(255, 77, 141, 0.15);
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+
+        /* Slide Transitions */
+        .step {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .step.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px) scale(0.98);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Typography */
+        h1, h2 {
+            font-family: 'Playfair Display', serif;
+            color: #ffd0ec;
+            margin-bottom: 14px;
+            font-weight: 700;
+        }
+
+        h1 { font-size: 28px; }
+        h2 { font-size: 24px; }
+
+        p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #d1c4d4;
+            margin-bottom: 24px;
+            font-weight: 400;
+        }
+
+        .icon-large {
+            font-size: 48px;
+            margin-bottom: 16px;
+            filter: drop-shadow(0 0 12px rgba(255, 77, 141, 0.5));
+        }
+
+        /* Button Styling */
+        .btn {
+            background: linear-gradient(135deg, #ff4d8d 0%, #ff758c 100%);
+            color: #ffffff;
+            border: none;
+            padding: 14px 32px;
+            font-size: 15px;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(255, 77, 141, 0.4);
+            transition: all 0.3s ease;
+            margin-top: auto;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(255, 77, 141, 0.6);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        /* Step 3: Compliments List */
+        .compliment-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .compliment-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 14px;
+            backdrop-filter: blur(5px);
+        }
+
+        .compliment-card h4 {
+            font-size: 14px;
+            color: #ff9ebb;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .compliment-card p {
+            font-size: 12.5px;
+            margin-bottom: 0;
+            color: #bfaec2;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Progress Indicator -->
+    <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="progressFill"></div>
+    </div>
+
+    <!-- Background Animated Hearts -->
+    <div class="hearts-container" id="heartsContainer"></div>
+
+    <!-- Main Card Container -->
+    <div class="card-container">
+
+        <!-- STEP 1: WELCOME PAGE -->
+        <div class="step active" id="step1">
+            <div class="icon-large">❤️</div>
+            <h1>Hey Cinderella,</h1>
+            <p>I built a little world just for you, created with so much care, simply to bring a bright and lovely smile to your face on your special day. You truly deserve all the magic, wonder, and beauty that this entire universe has to offer.</p>
+            <button class="btn" onclick="nextStep(2)">Let's Begin ✨</button>
+        </div>
+
+        <!-- STEP 2: BIRTHDAY MESSAGE -->
+        <div class="step" id="step2">
+            <div class="icon-large">🎉</div>
+            <h1>Happy Birthday!</h1>
+            <p>Another wonderful year of you making this world a much brighter and happier place just by being in it. Your existence is an absolute gift — not just to me, but to everyone around you who is fortunate enough to know your beautiful heart.</p>
+            <button class="btn" onclick="nextStep(3)">There's more... 💫</button>
+        </div>
+
+        <!-- STEP 3: A FEW THINGS I ADORE ABOUT YOU -->
+        <div class="step" id="step3">
+            <h2>A Few Things I Adore About You</h2>
+            <div class="compliment-list">
+                <div class="compliment-card">
+                    <h4>✨ Your Unmatched Kindness</h4>
+                    <p>The genuine warmth, care, and gentleness you show to everyone around you is something truly rare, precious, and beautiful. You have this amazing way of making people feel seen and valued.</p>
+                </div>
+                <div class="compliment-card">
+                    <h4>😊 That Smile</h4>
+                    <p>Your smile is nothing less than a breathtaking work of art, capable of lighting up even the darkest and dullest days effortlessly.</p>
+                </div>
+                <div class="compliment-card">
+                    <h4>🌟 Your Spirit</h4>
+                    <p>Your vibrant and infectious energy breathes life into everything around you, inspiring positivity everywhere you go.</p>
+                </div>
+                <div class="compliment-card">
+                    <h4>💖 Just... You</h4>
+                    <p>Simply being around you makes everything in life feel a little more exciting, meaningful, and full of endless possibilities.</p>
+                </div>
+            </div>
+            <button class="btn" onclick="nextStep(4)">One last thing... 🎁</button>
+        </div>
+
+        <!-- STEP 4: MY WISH FOR YOU -->
+        <div class="step" id="step4">
+            <div class="icon-large">🎂</div>
+            <h1>My Wish For You</h1>
+            <p>May the coming year bring you an abundance of all the love, endless success, and pure, untouched happiness that you so rightfully deserve. May your biggest dreams soar higher than ever before, Cinderella, and may all your wishes come true. Have an unforgettable birthday!</p>
+            <button class="btn" onclick="triggerCelebration()">Celebrate! 🎊</button>
+        </div>
+
+    </div>
+
+    <script>
+        // Generate Floating Hearts Background
+        const heartsContainer = id('heartsContainer');
+        for (let i = 0; i < 20; i++) {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = '💖';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 4 + 6) + 's';
+            heart.style.animationDelay = (Math.random() * 5) + 's';
+            heart.style.fontSize = (Math.random() * 12 + 14) + 'px';
+            heartsContainer.appendChild(heart);
+        }
+
+        function id(elemId) {
+            return document.getElementById(elemId);
+        }
+
+        // Navigation between steps
+        function nextStep(stepNumber) {
+            for (let i = 1; i <= 4; i++) {
+                id('step' + i).classList.remove('active');
+            }
+            
+            id('step' + stepNumber).classList.add('active');
+
+            const progressFill = id('progressFill');
+            progressFill.style.width = (stepNumber * 25) + '%';
+        }
+
+        // Confetti effect on final celebration button
+        function triggerCelebration() {
+            var count = 200;
+            var defaults = { origin: { y: 0.7 } };
+
+            function fire(particleRatio, opts) {
+                confetti(Object.assign({}, defaults, opts, {
+                    particleCount: Math.floor(count * particleRatio)
+                }));
+            }
+
+            fire(0.25, { spread: 26, startVelocity: 55 });
+            fire(0.2, { spread: 60 });
+            fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
+            fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
+            fire(0.1, { spread: 120, startVelocity: 45 });
+        }
+    </script>
+</body>
+</html>
