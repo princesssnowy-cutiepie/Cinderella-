@@ -22,6 +22,7 @@
             font-family: 'Plus Jakarta Sans', sans-serif;
             min-height: 100vh;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             overflow-x: hidden;
@@ -85,16 +86,41 @@
             transition: width 0.4s ease;
         }
 
+        /* Music Player Box Styling */
+        .music-box {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 77, 141, 0.3);
+            padding: 8px 12px;
+            border-radius: 20px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 10;
+            backdrop-filter: blur(10px);
+        }
+
+        .music-box span {
+            font-size: 12px;
+            color: #ff9ebb;
+            font-weight: 500;
+        }
+
+        audio {
+            height: 30px;
+            width: 170px;
+        }
+
         /* Card Frame */
         .card-container {
             width: 90%;
             max-width: 390px;
-            min-height: 540px;
+            min-height: 500px;
             background: rgba(22, 16, 26, 0.75);
             border: 1px solid rgba(255, 77, 141, 0.25);
             backdrop-filter: blur(15px);
             border-radius: 28px;
-            padding: 28px 20px;
+            padding: 24px 20px;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6),
                         0 0 25px rgba(255, 77, 141, 0.15);
             z-index: 10;
@@ -186,7 +212,7 @@
             width: 100%;
             margin-bottom: 16px;
             text-align: left;
-            max-height: 350px;
+            max-height: 330px;
             overflow-y: auto;
             padding-right: 2px;
         }
@@ -255,11 +281,6 @@
 </head>
 <body>
 
-    <!-- Background Audio Element -->
-    <audio id="bgMusic" loop>
-        <source src="song.mp3" type="audio/mp3">
-    </audio>
-
     <!-- Top Progress Indicator -->
     <div class="progress-bar-wrap">
         <div class="progress-bar-fill" id="progressFill"></div>
@@ -267,6 +288,15 @@
 
     <!-- Background Animated Hearts -->
     <div class="hearts-container" id="heartsContainer"></div>
+
+    <!-- Visible Audio Player so she can tap Play easily -->
+    <div class="music-box">
+        <span>Play Music 🎵</span>
+        <audio id="bgMusic" controls loop>
+            <source src="song.mp3" type="audio/mp3">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
 
     <!-- Main Card Container -->
     <div class="card-container">
@@ -276,7 +306,7 @@
             <div class="icon-large">❤️</div>
             <h1>Hey Cinderella,</h1>
             <p>I built a little world just for you, created with so much care, simply to bring a bright and lovely smile to your face on your special day. You truly deserve all the magic, wonder, and beauty that this entire universe has to offer.</p>
-            <button class="btn" onclick="playMusicAndNext()">Let's Begin ✨</button>
+            <button class="btn" onclick="nextStep(2)">Let's Begin ✨</button>
         </div>
 
         <!-- STEP 2: BIRTHDAY MESSAGE -->
@@ -362,17 +392,6 @@
 
         function id(elemId) {
             return document.getElementById(elemId);
-        }
-
-        // Play music and move to step 2 when clicking "Let's Begin"
-        function playMusicAndNext() {
-            var music = id('bgMusic');
-            if (music) {
-                music.play().catch(function(error) {
-                    console.log("Audio play restricted");
-                });
-            }
-            nextStep(2);
         }
 
         // Navigation between steps
