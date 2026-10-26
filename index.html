@@ -276,7 +276,7 @@
             <div class="icon-large">❤️</div>
             <h1>Hey Cinderella,</h1>
             <p>I built a little world just for you, created with so much care, simply to bring a bright and lovely smile to your face on your special day. You truly deserve all the magic, wonder, and beauty that this entire universe has to offer.</p>
-            <button class="btn" onclick="nextStep(2)">Let's Begin ✨</button>
+            <button class="btn" onclick="playMusicAndNext()">Let's Begin ✨</button>
         </div>
 
         <!-- STEP 2: BIRTHDAY MESSAGE -->
@@ -364,7 +364,18 @@
             return document.getElementById(elemId);
         }
 
-        // Navigation between steps & Playing background music
+        // Play music and move to step 2 when clicking "Let's Begin"
+        function playMusicAndNext() {
+            var music = id('bgMusic');
+            if (music) {
+                music.play().catch(function(error) {
+                    console.log("Audio play restricted");
+                });
+            }
+            nextStep(2);
+        }
+
+        // Navigation between steps
         function nextStep(stepNumber) {
             for (let i = 1; i <= 5; i++) {
                 id('step' + i).classList.remove('active');
@@ -374,16 +385,6 @@
 
             const progressFill = id('progressFill');
             progressFill.style.width = (stepNumber * 20) + '%';
-
-            // Play background music automatically as soon as she clicks "Let's Begin"
-            if (stepNumber === 2) {
-                var music = id('bgMusic');
-                if (music) {
-                    music.play().catch(function(error) {
-                        console.log("Audio playback blocked by browser policy");
-                    });
-                }
-            }
         }
 
         // Confetti effect on final celebration button
