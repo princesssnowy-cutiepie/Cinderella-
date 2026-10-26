@@ -238,7 +238,7 @@
 
         .polaroid img {
             width: 100%;
-            height: 120px;
+            height: 115px;
             object-fit: contain;
             background-color: #f7f7f7;
             border-radius: 3px;
@@ -254,6 +254,11 @@
     </style>
 </head>
 <body>
+
+    <!-- Background Audio Element -->
+    <audio id="bgMusic" loop>
+        <source src="song.mp3" type="audio/mp3">
+    </audio>
 
     <!-- Top Progress Indicator -->
     <div class="progress-bar-wrap">
@@ -359,7 +364,7 @@
             return document.getElementById(elemId);
         }
 
-        // Navigation between steps (Total 5 steps now)
+        // Navigation between steps & Playing background music
         function nextStep(stepNumber) {
             for (let i = 1; i <= 5; i++) {
                 id('step' + i).classList.remove('active');
@@ -369,6 +374,16 @@
 
             const progressFill = id('progressFill');
             progressFill.style.width = (stepNumber * 20) + '%';
+
+            // Play background music automatically as soon as she clicks "Let's Begin"
+            if (stepNumber === 2) {
+                var music = id('bgMusic');
+                if (music) {
+                    music.play().catch(function(error) {
+                        console.log("Audio playback blocked by browser policy");
+                    });
+                }
+            }
         }
 
         // Confetti effect on final celebration button
